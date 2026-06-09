@@ -33,7 +33,7 @@ export async function GET(request: Request) {
   venue:             null,
   address:           null,
   prefecture:        'osaka',
-  starts_at:         null,
+  starts_at:         new Date().toISOString(),
   ends_at:           null,
   genre:             'other' as const,
   is_free:           false,
