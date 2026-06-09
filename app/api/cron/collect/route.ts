@@ -32,7 +32,7 @@ export async function GET(request: Request) {
   title:             item.rawText.split('\n')[0]?.slice(0, 80) ?? 'タイトル未設定',
   venue:             null,
   address:           null,
-  prefecture:        null as any,
+  prefecture:        'osaka',
   starts_at:         null,
   ends_at:           null,
   genre:             'other' as const,
