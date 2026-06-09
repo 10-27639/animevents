@@ -1,4 +1,4 @@
-import { createServiceClient } from '@/lib/supabase/server'
+﻿import { createServiceClient } from '@/lib/supabase/server'
 import { extractEventsBatch } from '@/lib/claude/extract'
 import { fetchPrTimes } from '@/lib/crawler/scraper'
 import { fetchXPosts } from '@/lib/crawler/x'
@@ -28,7 +28,20 @@ export async function GET(request: Request) {
   }
 
   // 2. Claude API で構造化抽出
-  const extracted = await extractEventsBatch(rawItems)
+  const extracted = rawItems.map((item) => ({
+  title:             item.rawText.split('\n')[0]?.slice(0, 80) ?? 'タイトル未設定',
+  venue:             null,
+  address:           null,
+  prefecture:        null as any,
+  starts_at:         null,
+  ends_at:           null,
+  genre:             'other' as const,
+  is_free:           false,
+  ticket_url:        null,
+  work_names:        [],
+  confidence:        0.6,
+  confidence_reason: '手動レビュー待ち',
+}))
 
   // 3. スコアに応じて DB に書き込み
   const supabase = createServiceClient()
